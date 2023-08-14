@@ -6,7 +6,11 @@ const buffer = fs.readFileSync("test.pdf");
 const options = {};
 pdfExtract.extractBuffer(buffer, options, (err, data) => {
   if (err) return console.log(err);
-  getLink(data)
+
+  fetch(getLink(data))
+    .then(response => response.text())
+    .then(console.log)
+
 });
 
 function getLink (data) {
