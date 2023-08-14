@@ -13,7 +13,8 @@ pdfExtract.extractBuffer(buffer, options, (err, data) => {
     .then(response => response.text())
     .then(html => {
       const { document } = (new JSDOM(html)).window
-      console.log(getDeckName(document))
+      const deck = getDeckName(document) + '\n' + getCardContent(document)
+      console.log(deck)
     })
 
 });
@@ -34,4 +35,12 @@ function getDeckName(document) {
     .replace(/[()]/g, '')
     .replace(/^0/, '')
   return '# EnglishPod 365::' + index + 'B ' + name
+}
+
+function getCardContent(document) {
+  const tds = [...document.querySelectorAll('h1:not(:first-child) + table tr td:nth-child(odd)')]
+  return tds.map((td, index) => {
+    const prefix = index % 2 === 0 ? '## ' : ''
+    return prefix + td.textContent
+  }).join('\n')
 }
