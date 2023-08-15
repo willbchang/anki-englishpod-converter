@@ -2,19 +2,19 @@ import {PDFExtract} from 'pdf.js-extract';
 import fs from 'fs'
 import { JSDOM } from 'jsdom'
 
+extractPDF('test.pdf')
+  .then(getLink)
+  .then(fetch)
+  .then(response => response.text())
+  .then(getDeck)
+  .then(writeMarkdownFile)
 
-const pdfExtract = new PDFExtract();
-const buffer = fs.readFileSync("test.pdf");
-const options = {};
-pdfExtract.extractBuffer(buffer, options, (err, data) => {
-  if (err) return console.log(err);
-
-  fetch(getLink(data))
-    .then(response => response.text())
-    .then(getDeck)
-    .then(writeMarkdownFile)
-
-});
+function extractPDF (filepath) {
+  const pdfExtract = new PDFExtract()
+  const buffer = fs.readFileSync(filepath)
+  const options = {}
+  return pdfExtract.extractBuffer(buffer, options);
+}
 
 function getLink (data) {
   return data.pages
