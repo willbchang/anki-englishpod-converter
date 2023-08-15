@@ -1,6 +1,6 @@
-import { generateDeck } from './deck.js'
-import { createDeckWithNotes } from './anki.js'
-import { extractPDF, extractLink } from './pdf.js'
+import { extractLink, extractPDF } from './src/pdf.js'
+import { generateDeck } from './src/deck.js'
+import { createDeckWithNotes } from './src/anki.js'
 
 extractPDF('test.pdf')
   .then(extractLink)
