@@ -4,11 +4,13 @@ import { createDeckWithNotes } from './src/anki.js'
 
 extractPDF('test.pdf')
   .then(extractLink)
-  .then(fetch)
-  .then(response => response.text())
+  .then(fetchResponse)
   .then(generateDeck)
   .then(createDeckWithNotes)
 
-
-
-
+async function fetchResponse (link) {
+  const response = await fetch(link)
+  const html = await response.text()
+  const url = response.url
+  return { html, url }
+}
