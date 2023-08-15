@@ -1,6 +1,6 @@
 import { JSDOM } from 'jsdom'
 
-export function getDeck (html) {
+export function generateDeck (html) {
   const { document } = (new JSDOM(html)).window
   return  getDeckName(document) + '\n' + getCardContent(document)
 
