@@ -8,7 +8,7 @@ export function extractPDF (filepath) {
   return pdfExtract.extractBuffer(buffer, options);
 }
 
-export function getLink (data) {
+export function extractLink (data) {
   return data.pages
     .map(page => page.links.find(link => link.includes('s3.amazonaws.com')))
     .find(link => link)
