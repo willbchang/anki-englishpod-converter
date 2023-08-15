@@ -12,7 +12,7 @@ pdfExtract.extractBuffer(buffer, options, (err, data) => {
   fetch(getLink(data))
     .then(response => response.text())
     .then(getDeck)
-    .then(console.log)
+    .then(writeMarkdownFile)
 
 });
 
@@ -45,4 +45,8 @@ function getDeck (html) {
       return prefix + td.textContent
     }).join('\n')
   }
+}
+
+function writeMarkdownFile (text) {
+  return fs.writeFileSync('./test.md', text)
 }
