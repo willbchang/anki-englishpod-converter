@@ -1,13 +1,14 @@
 import {PDFExtract} from 'pdf.js-extract';
 import fs from 'fs'
 import { JSDOM } from 'jsdom'
+import * as anki from './anki.js'
 
 extractPDF('test.pdf')
   .then(getLink)
   .then(fetch)
   .then(response => response.text())
   .then(getDeck)
-  .then(writeMarkdownFile)
+  .then(anki.createDeck)
 
 function extractPDF (filepath) {
   const pdfExtract = new PDFExtract()
@@ -45,8 +46,4 @@ function getDeck (html) {
       return prefix + td.textContent
     }).join('\n')
   }
-}
-
-function writeMarkdownFile (text) {
-  return fs.writeFileSync('./test.md', text)
 }
