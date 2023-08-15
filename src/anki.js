@@ -3,7 +3,9 @@ export async function createDeckWithNotes ({ deck, notes }) {
   await ankiConnect('addNotes', { notes })
 }
 
-function ankiConnect (action, params = {}, version = 6) {
+await ankiConnect('createDeck', { deck: '123' })
+
+async function ankiConnect (action, params = {}, version = 6) {
   const url = 'http://127.0.0.1:8765'
   const config = {
     method: 'POST',
@@ -13,8 +15,16 @@ function ankiConnect (action, params = {}, version = 6) {
       params,
     })
   }
-  return fetch(url, config)
-    .then(response => response.json())
+
+  try {
+    const response = await fetch(url, config)
+    const { result, error } = await response.json()
+    if (error) console.error(error)
+    console.log(action, 'is successful', result)
+    return result
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 
