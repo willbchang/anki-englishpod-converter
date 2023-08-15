@@ -3,8 +3,6 @@ export async function createDeckWithNotes ({ deck, notes }) {
   await ankiConnect('addNotes', { notes })
 }
 
-await ankiConnect('createDeck', { deck: '123' })
-
 async function ankiConnect (action, params = {}, version = 6) {
   const url = 'http://127.0.0.1:8765'
   const config = {
