@@ -1,11 +1,9 @@
-createDeck()
-export async function createDeck (params) {
-  await invoke('createDeck', 6, { deck: 'test1' })
-  const result = await invoke('deckNames', 6)
-  console.log(result)
+export async function createDeckWithNotes ({ deck, notes }) {
+  await ankiConnect('createDeck', { deck })
+  await ankiConnect('addNotes', { notes })
 }
 
-function invoke (action, version, params = {}) {
+function ankiConnect (action, params = {}, version = 6) {
   const url = 'http://127.0.0.1:8765'
   const config = {
     method: 'POST',
