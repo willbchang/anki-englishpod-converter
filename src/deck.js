@@ -2,7 +2,10 @@ import { JSDOM } from 'jsdom'
 
 export function generateDeck (html, url) {
   const { document } = (new JSDOM(html)).window
-  return  getDeckName(document, url) + '\n' + getCardContent(document)
+  return {
+    deck: getDeckName(),
+    notes: generateNotes(),
+  }
 }
 
 function getDeckName(document, url) {
@@ -18,10 +21,23 @@ function getDeckName(document, url) {
   return 'EnglishPod 365::' + index + ' ' + name
 }
 
-function getCardContent(document) {
+function generateNotes (document) {
   const tds = [...document.querySelectorAll('h1:not(:first-child) + table tr td:nth-child(odd)')]
-  return tds.map((td, index) => {
-    const prefix = index % 2 === 0 ? '## ' : ''
-    return prefix + td.textContent
-  }).join('\n')
+  const text = tds.map(td => td.textContent + '<br>')
+  return convertTo2DArray(text).map(generateNote)
+}
+
+function convertTo2DArray (arr) {
+  return Array.from({ length: Math.ceil(arr.length / 2) }, (_, i) => arr.slice(i * 2, i * 2 + 2))
+}
+
+function generateNote ([Front, Back]) {
+  return {
+    deckName: getDeckName(),
+    modelName: 'Basic',
+    fields: {
+      Front,
+      Back,
+    },
+  }
 }
