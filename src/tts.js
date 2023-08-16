@@ -21,6 +21,10 @@ fetch(url, {
   body,
 })
   .then(response => response.arrayBuffer())
-  .then(Buffer.from)
-  .then(buffer => fs.writeFileSync('assets/output.mp3', buffer))
+  .then(saveAsMp3)
   .catch(error => console.error('Error:', error))
+
+function saveAsMp3 (arrayBuffer) {
+  const buffer = Buffer.from(arrayBuffer)
+  fs.writeFileSync('assets/output.mp3', buffer)
+}
