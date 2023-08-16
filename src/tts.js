@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-function fetchTTS (text) {
+export function fetchTTS (text) {
   const url = `https://${process.env.AZURE_REGION}.tts.speech.microsoft.com/cognitiveservices/v1`
   const config = {
     method: 'POST',
@@ -21,10 +21,12 @@ function fetchTTS (text) {
 
   return fetch(url, config)
     .then(response => response.arrayBuffer())
+    .then(Buffer.from)
     .catch(error => console.error('Error:', error))
 }
 
-function saveAsMp3 (arrayBuffer) {
-  const buffer = Buffer.from(arrayBuffer)
-  fs.writeFileSync('assets/output.mp3', buffer)
+export function saveAsMp3 (buffer, filename) {
+  fs.writeFileSync(`./src/assets/${filename}.mp3`, buffer)
+  return filename
 }
+
