@@ -1,6 +1,8 @@
+import 'dotenv/config'
 import { extractLink, extractPDF } from './src/pdf.js'
 import { generateDeck } from './src/deck.js'
 import { createDeckWithNotes } from './src/anki.js'
+import './src/tts.js'
 
 extractPDF('test.pdf')
   .then(extractLink)
