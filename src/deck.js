@@ -47,7 +47,18 @@ export async function generateDeckWithNotes ({ html, url }) {
         Back: Back + '<br>',
       },
       audio: await Promise.all([Front, Back].map(generateAudio)),
+      tags: generateTags(),
     }
+  }
+
+  function generateTags () {
+    const tag = document.querySelector('h1:first-child a')
+      .textContent
+      .replace(/ - .*/, '')
+      .replace(/ /g, '-')
+      .toLowerCase()
+
+    return [tag]
   }
 
   function generateAudio (text, index) {
