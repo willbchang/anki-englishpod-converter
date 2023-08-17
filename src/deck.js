@@ -26,7 +26,7 @@ export async function generateDeckWithNotes ({ html, url }) {
   }
 
   function generateDeckNameSuffix () {
-    return document.querySelector('h1:first-child a')
+    return document.querySelector('h1 a')
       .textContent
       .replace(/^.*- /, '')
       .replace('!', '')
@@ -56,7 +56,7 @@ export async function generateDeckWithNotes ({ html, url }) {
   }
 
   function generateTags () {
-    const tag = document.querySelector('h1:first-child a')
+    const tag = document.querySelector('h1 a')
       .textContent
       .replace(/ - .*/, '')
       .replace(/ /g, '-')
