@@ -11,5 +11,13 @@ export function extractPDF (filepath) {
 export function extractLink (data) {
   return data.pages
     .map(page => page.links.find(link => link.includes('s3.amazonaws.com')))
-    .find(link => link)
+    .find(link => fixLink(link))
+}
+
+function fixLink (link) {
+  if (!link) return
+  const index = link.match(/\/[0-9]{4}\//)[0].replaceAll('/', '')
+  let result = link.replace('extra/')
+  if (link.endsWith('pdf/')) result += 'englishpod_' + index + '.html'
+  return result
 }
