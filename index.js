@@ -3,13 +3,25 @@ import { extractLink, extractPDF } from './src/pdf.js'
 import { generateDeckWithNotes } from './src/deck.js'
 import { sendToAnki } from './src/anki.js'
 import fs from 'fs'
+import os from 'os'
 
-extractPDF('test.pdf')
-  .then(extractLink)
-  .then(fetchResponse)
-  .then(generateDeckWithNotes)
-  .then(sendToAnki)
-  .then(removeAudioFiles)
+englishPodToAnki()
+
+async function englishPodToAnki () {
+  const dir = `${os.homedir()}/Documents/Bookshelf/English/EnglishPod/`
+  for (let filepath of fs.readdirSync(dir)) {
+    await convertEnglishPodToAnki(filepath)
+  }
+}
+
+function convertEnglishPodToAnki (filepath) {
+  return extractPDF(filepath)
+    .then(extractLink)
+    .then(fetchResponse)
+    .then(generateDeckWithNotes)
+    .then(sendToAnki)
+    .then(removeAudioFiles)
+}
 
 async function fetchResponse (link) {
   const response = await fetch(link)
