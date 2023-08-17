@@ -75,6 +75,7 @@ export async function generateDeckWithNotes ({ html, url }) {
 
   function generateAudio (text, index) {
     const fields = [index === 0 ? 'Front' : 'Back']
+    if (text === '') return console.log('Found empty text, ignore audio generating.')
     return fetchTTS(text)
       .then(buffer => saveAsMp3(buffer, 'EnglishPod-' + UUID()))
       .then(filename => ({
