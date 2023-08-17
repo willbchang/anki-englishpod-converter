@@ -15,7 +15,7 @@ export async function generateDeckWithNotes ({ html, url }) {
   }
 
   function generateDeckNamePrefix () {
-    const span = document.querySelector('h1 span')
+    const span = document.querySelector('h1:first-of-type span')
       .textContent
       .replace(/[()]/g, '')
     const hasLevel = /^[A-Z]/.test(span)
@@ -26,14 +26,14 @@ export async function generateDeckWithNotes ({ html, url }) {
   }
 
   function generateDeckNameSuffix () {
-    return document.querySelector('h1 a')
+    return document.querySelector('h1:first-of-type a')
       .textContent
       .replace(/^.*- /, '')
       .replace('!', '')
   }
 
   async function generateNotes () {
-    const tds = [...document.querySelectorAll('h1:not(:first-child) + table tr td:nth-child(odd)')]
+    const tds = [...document.querySelectorAll('h1:not(:first-of-type) + table tr td:nth-child(odd)')]
     const text = tds.map(td => td.textContent)
     return Promise.all(convertTo2DArray(text).map(generateNote))
   }
@@ -56,7 +56,7 @@ export async function generateDeckWithNotes ({ html, url }) {
   }
 
   function generateTags () {
-    const tag = document.querySelector('h1 a')
+    const tag = document.querySelector('h1:first-of-type a')
       .textContent
       .replace(/ - .*/, '')
       .replace(/ /g, '-')
