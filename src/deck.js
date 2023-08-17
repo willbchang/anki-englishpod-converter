@@ -35,11 +35,19 @@ export async function generateDeckWithNotes ({ html, url }) {
   async function generateNotes () {
     const vocabularies = [...document.querySelectorAll('h1:not(:first-of-type) + table tr td:nth-child(odd)')]
       .map(td => td.textContent)
-    return Promise.all(convertTo2DArray(vocabularies).map(generateNote))
+    return Promise.all(
+      convertTo2DArray(vocabularies)
+        .filter(arrayIsNotEmptyString)
+        .map(generateNote)
+    )
   }
 
   function convertTo2DArray (arr) {
     return Array.from({ length: Math.ceil(arr.length / 2) }, (_, i) => arr.slice(i * 2, i * 2 + 2))
+  }
+
+  function arrayIsNotEmptyString (arr) {
+    return !(arr[0] === '' && arr[1] === '')
   }
 
   async function generateNote ([Front, Back]) {
