@@ -12,6 +12,7 @@ export async function generateDeck ({ html, url }) {
     const index = url.split('englishpod_')[1]
       .replace('.html', '')
       .replace('0', '')
+      .replace(/(\w)(\w+)/g, '$2$1') // move the first char(level) to the end
 
     const name = document.querySelector('h1:first-child a')
       .textContent
