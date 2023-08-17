@@ -22,12 +22,9 @@ function convertEnglishPodToAnki (filepath) {
     .then(generateDeckWithNotes)
     .then(sendToAnki)
     .then(removeAudioFiles)
-    .then(() => moveFileToDir(filepath, 'Done'))
+    .then(() => moveFileToDone(filepath))
     .then(() => console.log('DONE!'))
-    .catch(error => {
-      moveFileToDir(filepath, 'Error')
-      console.error(error)
-    })
+    .catch(error => console.error(error))
 }
 
 async function fetchResponse (link) {
@@ -42,6 +39,6 @@ async function removeAudioFiles () {
   await fs.readdirSync(dir).forEach(f => fs.rmSync(`${dir}/${f}`))
 }
 
-function moveFileToDir(path, folder) {
-  fs.renameSync(path, path.replace('EnglishPod', folder))
+function moveFileToDone(path) {
+  fs.renameSync(path, path.replace('EnglishPod', 'Done'))
 }
