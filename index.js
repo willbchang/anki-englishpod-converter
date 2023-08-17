@@ -9,8 +9,8 @@ englishPodToAnki()
 
 async function englishPodToAnki () {
   const dir = `${os.homedir()}/Documents/Bookshelf/English/EnglishPod/`
-  for (let filepath of fs.readdirSync(dir)) {
-    await convertEnglishPodToAnki(dir + filepath)
+  for (let filename of fs.readdirSync(dir)) {
+    await convertEnglishPodToAnki(dir + filename)
   }
 }
 
