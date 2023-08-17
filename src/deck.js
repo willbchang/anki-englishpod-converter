@@ -15,10 +15,11 @@ export async function generateDeckWithNotes ({ html, url }) {
   }
 
   function generateDeckNamePrefix () {
-    const span = document.querySelector('h1:first-child span').textContent
+    const span = document.querySelector('h1 span').textContent
     const hasLevel = /^[A-Z]/.test(span)
     const prefix = hasLevel ? span : url.split('englishpod_')[1].replace('.html', '')
     return prefix
+      .replace(/[()]/, '')
       .replace(/(\w)(\w+)/g, '$2$1')
       .replace('0', '')
   }
