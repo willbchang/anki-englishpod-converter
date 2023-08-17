@@ -18,7 +18,6 @@ async function ankiConnect (action, params = {}, version = 6) {
     const response = await fetch(url, config)
     const { result, error } = await response.json()
     if (error) console.error(error)
-    console.log(action, 'is successful', result)
     return result
   } catch (error) {
     console.error(error)

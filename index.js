@@ -15,13 +15,15 @@ async function englishPodToAnki () {
 }
 
 function convertEnglishPodToAnki (filepath) {
+  console.log('Converting ', filepath)
   return extractPDF(filepath)
     .then(extractLink)
     .then(fetchResponse)
     .then(generateDeckWithNotes)
     .then(sendToAnki)
     .then(removeAudioFiles)
-    .catch(console.error)
+    .then(() => console.log('DONE!'))
+    .catch(error => console.error(error))
 }
 
 async function fetchResponse (link) {

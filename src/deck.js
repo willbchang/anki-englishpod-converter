@@ -3,6 +3,8 @@ import { fetchTTS, saveAsMp3 } from './tts.js'
 
 export async function generateDeckWithNotes ({ html, url }) {
   const { document } = (new JSDOM(html)).window
+  console.log(url)
+
   return {
     deck: getDeckName(),
     notes: await generateNotes(),
