@@ -9,17 +9,23 @@ export async function generateDeckWithNotes ({ html, url }) {
   }
 
   function getDeckName () {
-    const index = url.split('englishpod_')[1]
-      .replace('.html', '')
-      .replace('0', '')
-      .replace(/(\w)(\w+)/g, '$2$1') // move the first char(level) to the end
+    return 'EnglishPod 365::' + generateDeckNamePrefix() + ' ' + generateDeckNameSuffix()
+  }
 
-    const name = document.querySelector('h1:first-child a')
+  function generateDeckNamePrefix () {
+    const span = document.querySelector('h1:first-child span').textContent
+    const hasLevel = /^[A-Z]/.test(span)
+    const prefix = hasLevel ? span : url.split('englishpod_')[1].replace('.html', '')
+    return prefix
+      .replace(/(\w)(\w+)/g, '$2$1')
+      .replace('0', '')
+  }
+
+  function generateDeckNameSuffix () {
+    return document.querySelector('h1:first-child a')
       .textContent
       .replace(/^.*- /, '')
       .replace('!', '')
-
-    return 'EnglishPod 365::' + index + ' ' + name
   }
 
   async function generateNotes () {
@@ -61,4 +67,5 @@ export async function generateDeckWithNotes ({ html, url }) {
       (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
     )
   }
+
 }
