@@ -21,6 +21,7 @@ function convertEnglishPodToAnki (filepath) {
     .then(generateDeckWithNotes)
     .then(sendToAnki)
     .then(removeAudioFiles)
+    .catch(console.error)
 }
 
 async function fetchResponse (link) {
