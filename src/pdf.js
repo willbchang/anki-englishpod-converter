@@ -9,9 +9,10 @@ export function extractPDF (filepath) {
 }
 
 export function extractLink (data) {
-  return data.pages
+  const link =  data.pages
     .map(page => page.links.find(link => link.includes('s3.amazonaws.com')))
-    .find(link => fixLink(link))
+    .find(link => link)
+  return fixLink(link)
 }
 
 function fixLink (link) {
