@@ -1,7 +1,7 @@
 import { JSDOM } from 'jsdom'
 import { fetchTTS, saveAsMp3 } from './tts.js'
 
-export async function generateDeck ({ html, url }) {
+export async function generateDeckWithNotes ({ html, url }) {
   const { document } = (new JSDOM(html)).window
   return {
     deck: getDeckName(),

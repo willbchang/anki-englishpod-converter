@@ -1,4 +1,4 @@
-export async function createDeckWithNotes ({ deck, notes }) {
+export async function sendToAnki ({ deck, notes }) {
   await ankiConnect('createDeck', { deck })
   await ankiConnect('addNotes', { notes })
 }
