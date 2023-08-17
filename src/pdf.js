@@ -18,7 +18,7 @@ export function extractLink (data) {
 function fixLink (link) {
   if (!link) return
   const index = link.match(/\/[0-9]{4}\//)[0].replaceAll('/', '')
-  let result = link.replace('extra/')
+  let result = link.replace('extra/', '')
   if (link.endsWith('pdf/')) result += 'englishpod_' + index + '.html'
   return result
 }
