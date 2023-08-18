@@ -37,7 +37,7 @@ async function fetchResponse (link, count = -1) {
     console.log('Link is not Valid: ', response.url)
     return await fetchResponse(newLink, count)
   } else {
-    console.log('Found Valid Link: ', response.url)
+    if (count > -1) console.log('Found Valid Link: ', response.url)
     return {
       html: await response.text(),
       url: response.url
