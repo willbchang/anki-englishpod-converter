@@ -49,15 +49,16 @@ export async function generateDeckWithNotes ({ html, url }) {
     return !(arr[0] === '' && arr[1] === '')
   }
 
-  async function generateNote ([Front, Back]) {
+  async function generateNote ([Vocabulary, Explanation]) {
     return {
       deckName: getDeckName(),
-      modelName: 'Basic',
+      modelName: 'EnglishPod',
       fields: {
-        Front: Front + '<br>',
-        Back: Back + '<br>',
+        Vocabulary: Vocabulary + '<br>',
+        Explanation: Explanation + '<br>',
+        Example: '',
       },
-      audio: await Promise.all([Front, Back].map(generateAudio)),
+      audio: await Promise.all([Vocabulary, Explanation].map(generateAudio)),
       tags: generateTags(),
     }
   }
@@ -73,8 +74,7 @@ export async function generateDeckWithNotes ({ html, url }) {
   }
 
   function generateAudio (text, index) {
-    const fields = [index === 0 ? 'Front' : 'Back']
-    if (text === '') return console.log('Found empty text, ignore audio generating.')
+    const fields = [index === 0 ? 'Vocabulary' : 'Explanation']
     return fetchTTS(text)
       .then(buffer => saveAsMp3(buffer, 'EnglishPod-' + UUID()))
       .then(filename => ({
